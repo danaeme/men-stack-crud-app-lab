@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit <%= dog.name %></title>
+</head>
+<body>
+    <h1>Edit <%= dog.name %></h1>
+    <form action="/dogs/<%= dog._id %>?_method=PUT" method="POST">
+        <div>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="<%= dog.name %>">
+        </div>
+        <div>
+            <label for="breed">Breed:</label>
+            <input type="text" id="breed" name="breed" value="<%= dog.breed %>">
+        </div>
+        <div>
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" value="<%= dog.age %>">
+        </div>
+        <div>
+            <label for="vaccinated">Vaccinated:</label>
+            <input type="checkbox" id="vaccinated" name="vaccinated" <%= dog.vaccinated ? "checked" : "" %>>
+        </div>
+        <button type="submit">Update Dog</button> 
+    </form>
+    <a href="/dogs/<%= dog._id %>">Cancel</a>
+</body>
+</html>

@@ -65,6 +65,25 @@ app.get('/dogs/:id', async (req, res) => {
   res.render('show.ejs', {dog});
 }); 
 
+//edit a dog
+app.get('/dogs/:id/edit', async (req, res) => {
+  const dog = await Dog.findById(req.params.id);
+  res.render('edit.ejs', {dog});
+});
+
+//update edited dog
+app.put('/dogs/:id', async (req, res) => {
+  const updatedDog = {
+    name: req.body.name,
+    breed: req.body.breed,
+    age: req.body.age,
+    vaccinated: req.body.vaccinated ? true : false
+  };
+
+  await Dog.findByIdAndUpdate(req.params.id, updatedDog);
+  res.redirect(`/dogs/${req.params.id}`);
+});
+
 app.listen(3000, () => {
     console.log("Listening on port 3000");
 })
