@@ -17,16 +17,14 @@ app.use(methodOverride('_method'));
 app.use(morgan('dev'));
 app.set("view engine", "ejs");
 mongoose.connect(process.env.MONGODB_URI);
-//Connect to MONGODB
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}`);
 });
 
-//Get Landing Page
 app.get("/", (req, res) => {
   res.render("home.ejs");
 });
-// GET /
+// GET 
 app.get("/", async (req, res) => {
     res.render("index.ejs");
   });
@@ -37,10 +35,12 @@ app.get("/", async (req, res) => {
   //   res.send("Server is running")
   // })
 
+  //Get new dog form
 app.get("/dogs/new", (req, res) => {
   res.render("new.ejs");
 });
 
+//create dog - post
 app.post("/dogs", async (req, res) => {
   const dog = new Dog({
     name: req.body.name,
@@ -53,10 +53,17 @@ app.post("/dogs", async (req, res) => {
   res.redirect('/dogs');
 });
 
+//list our dogs
 app.get('/dogs', async (req, res) => {
   const dogs = await Dog.find();
   res.render('index.ejs', { dogs });
 });
+
+//show a dog
+app.get('/dogs/:id', async (req, res) => {
+  const dog = await Dog.findById(req.params.id);
+  res.render('show.ejs', {dog});
+}); 
 
 app.listen(3000, () => {
     console.log("Listening on port 3000");

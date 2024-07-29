@@ -12,7 +12,7 @@
     <% if (dogs && dogs.length) { %>
       <% dogs.forEach(dog => { %>
         <li>
-          <%= dog.name %> - <%= dog.breed %> - <%= dog.age %> years old - <%= dog.vaccinated ? 'Vaccinated' : 'Not Vaccinated' %>
+          <a href="/dogs/<%= dog._id %>"><%= dog.name %></a> - <%= dog.breed %> - <%= dog.age %> years old - <%= dog.vaccinated ? 'Vaccinated' : 'Not Vaccinated' %>
         </li>
       <% }) %>
     <% } else { %>
