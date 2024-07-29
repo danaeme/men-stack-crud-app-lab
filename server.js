@@ -84,6 +84,12 @@ app.put('/dogs/:id', async (req, res) => {
   res.redirect(`/dogs/${req.params.id}`);
 });
 
+//Delete
+app.delete('/dogs/:id', async (req, res) => {
+  await Dog.findByIdAndDelete(req.params.id);
+  res.redirect('/dogs');
+});
+
 app.listen(3000, () => {
     console.log("Listening on port 3000");
 })
