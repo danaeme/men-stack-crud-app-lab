@@ -10,7 +10,6 @@ const morgan = require('morgan');
 const app = express();
 const Dog = require('./models/dog')
 
-//middleware
 app.use(express.urlencoded({extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
@@ -24,23 +23,16 @@ mongoose.connection.on("connected", () => {
 app.get("/", (req, res) => {
   res.render("home.ejs");
 });
-// GET 
+
 app.get("/", async (req, res) => {
     res.render("index.ejs");
   });
 
-  //server test
-  // app.get("/test", (req, res) => {
-  //   console.log("GET /test route works")
-  //   res.send("Server is running")
-  // })
 
-  //Get new dog form
 app.get("/dogs/new", (req, res) => {
   res.render("new.ejs");
 });
 
-//create dog - post
 app.post("/dogs", async (req, res) => {
   const dog = new Dog({
     name: req.body.name,
@@ -53,25 +45,21 @@ app.post("/dogs", async (req, res) => {
   res.redirect('/dogs');
 });
 
-//list our dogs
 app.get('/dogs', async (req, res) => {
   const dogs = await Dog.find();
   res.render('index.ejs', { dogs });
 });
 
-//show a dog
 app.get('/dogs/:id', async (req, res) => {
   const dog = await Dog.findById(req.params.id);
   res.render('show.ejs', {dog});
 }); 
 
-//edit a dog
 app.get('/dogs/:id/edit', async (req, res) => {
   const dog = await Dog.findById(req.params.id);
   res.render('edit.ejs', {dog});
 });
 
-//update edited dog
 app.put('/dogs/:id', async (req, res) => {
   const updatedDog = {
     name: req.body.name,
@@ -84,7 +72,6 @@ app.put('/dogs/:id', async (req, res) => {
   res.redirect(`/dogs/${req.params.id}`);
 });
 
-//Delete
 app.delete('/dogs/:id', async (req, res) => {
   await Dog.findByIdAndDelete(req.params.id);
   res.redirect('/dogs');
