@@ -1,4 +1,3 @@
-// server.js
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -21,6 +20,11 @@ mongoose.connect(process.env.MONGODB_URI);
 //Connect to MONGODB
 mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}`);
+});
+
+//Get Landing Page
+app.get("/", (req, res) => {
+  res.render("home.ejs");
 });
 // GET /
 app.get("/", async (req, res) => {
@@ -47,6 +51,11 @@ app.post("/dogs", async (req, res) => {
 
   await dog.save();
   res.redirect('/dogs');
+});
+
+app.get('/dogs', async (req, res) => {
+  const dogs = await Dog.find();
+  res.render('index.ejs', { dogs });
 });
 
 app.listen(3000, () => {

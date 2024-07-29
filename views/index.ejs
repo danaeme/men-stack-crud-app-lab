@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dogs</title>
 </head>
 <body>
-    <h1>Welcome to DOGS</h1>
-    <p>Fill a daycare with the dogs of your choice</p>
+  <h1>Daycare Roster</h1>
+  <a href="/dogs/new">Add New Dog</a>
+  <ul>
+    <% if (dogs && dogs.length) { %>
+      <% dogs.forEach(dog => { %>
+        <li>
+          <%= dog.name %> - <%= dog.breed %> - <%= dog.age %> years old - <%= dog.vaccinated ? 'Vaccinated' : 'Not Vaccinated' %>
+        </li>
+      <% }) %>
+    <% } else { %>
+      <li>No dogs found</li>
+    <% } %>
+  </ul>
 </body>
 </html>
